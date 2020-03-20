@@ -25,7 +25,7 @@
         <attr name="darkToolbarBackgroundColor" format="color"/>
         <attr name="darkToolbarTextColor" format="color"/>
 
-        <attr name="button_background_drawable" format="reference" />
+<!--        <attr name="button_background_drawable" format="reference" />-->
     </declare-styleable>
 
     <declare-styleable name="Settings">
