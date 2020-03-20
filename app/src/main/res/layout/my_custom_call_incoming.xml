@@ -151,7 +151,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:background="@drawable/hangup"
             android:contentDescription="@string/content_description_hang_up"
             android:padding="12dp"
             android:src="@drawable/call_hangup" />
