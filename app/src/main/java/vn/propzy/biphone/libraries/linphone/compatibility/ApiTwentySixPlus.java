@@ -184,7 +184,7 @@ class ApiTwentySixPlus {
             PendingIntent intent) {
         RemoteViews notificationLayoutHeadsUp =
                 new RemoteViews(
-                        context.getPackageName(), R.layout.call_incoming_notification_heads_up);
+                        context.getPackageName(), R.layout.linphone_call_incoming_notification_heads_up);
         notificationLayoutHeadsUp.setTextViewText(R.id.caller, contactName);
         notificationLayoutHeadsUp.setTextViewText(R.id.sip_uri, sipUri);
         notificationLayoutHeadsUp.setTextViewText(

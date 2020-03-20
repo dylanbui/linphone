@@ -100,12 +100,12 @@ public class SelectableHelper {
 //                new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        final Dialog dialog =
+//                        final Dialog linphone_dialog =
 //                                LinphoneUtils.getDialog(
 //                                        mContext,
 //                                        mContext.getString(mDialogDeleteMessageResourceId));
-//                        Button delete = dialog.findViewById(R.id.dialog_delete_button);
-//                        Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
+//                        Button delete = linphone_dialog.findViewById(R.id.dialog_delete_button);
+//                        Button cancel = linphone_dialog.findViewById(R.id.dialog_cancel_button);
 //
 //                        delete.setOnClickListener(
 //                                new View.OnClickListener() {
@@ -113,7 +113,7 @@ public class SelectableHelper {
 //                                    public void onClick(View view) {
 //                                        mDeleteListener.onDeleteSelection(getSelectedObjects());
 //                                        mEditButton.setEnabled(mAdapter.getItemCount() != 0);
-//                                        dialog.dismiss();
+//                                        linphone_dialog.dismiss();
 //                                        quitEditionMode();
 //                                    }
 //                                });
@@ -122,11 +122,11 @@ public class SelectableHelper {
 //                                new View.OnClickListener() {
 //                                    @Override
 //                                    public void onClick(View view) {
-//                                        dialog.dismiss();
+//                                        linphone_dialog.dismiss();
 //                                        quitEditionMode();
 //                                    }
 //                                });
-//                        dialog.show();
+//                        linphone_dialog.show();
 //                    }
 //                });
 //

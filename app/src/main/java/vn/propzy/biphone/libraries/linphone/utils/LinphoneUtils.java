@@ -350,7 +350,7 @@ public final class LinphoneUtils {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Drawable d = new ColorDrawable(ContextCompat.getColor(context, R.color.dark_grey_color));
         d.setAlpha(200);
-        dialog.setContentView(R.layout.dialog);
+        dialog.setContentView(R.layout.linphone_dialog);
         dialog.getWindow()
                 .setLayout(
                         WindowManager.LayoutParams.MATCH_PARENT,
@@ -407,7 +407,7 @@ public final class LinphoneUtils {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Drawable d = new ColorDrawable(ContextCompat.getColor(context, R.color.dark_grey_color));
         d.setAlpha(200);
-        dialog.setContentView(R.layout.dialog);
+        dialog.setContentView(R.layout.linphone_dialog);
         dialog.getWindow()
                 .setLayout(
                         WindowManager.LayoutParams.MATCH_PARENT,

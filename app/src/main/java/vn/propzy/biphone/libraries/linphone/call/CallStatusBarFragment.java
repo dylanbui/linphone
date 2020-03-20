@@ -64,7 +64,7 @@ public class CallStatusBarFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.call_status_bar, container, false);
+        View view = inflater.inflate(R.layout.linphone_call_status_bar, container, false);
 
         mStatusText = view.findViewById(R.id.status_text);
         mStatusLed = view.findViewById(R.id.status_led);
@@ -368,7 +368,7 @@ public class CallStatusBarFragment extends Fragment {
                     new ColorDrawable(
                             ContextCompat.getColor(getActivity(), R.color.dark_grey_color));
             d.setAlpha(200);
-            mZrtpDialog.setContentView(R.layout.dialog);
+            mZrtpDialog.setContentView(R.layout.linphone_dialog);
             mZrtpDialog
                     .getWindow()
                     .setLayout(
