@@ -33,104 +33,104 @@ import vn.propzy.biphone.R;
 
 
 public class SelectableHelper {
-    private final ImageView mEditButton;
-    private final ImageView mSelectAllButton;
-    private final ImageView mDeselectAllButton;
-    private final ImageView mDeleteSelectionButton;
-    private final LinearLayout mEditTopBar;
-    private final LinearLayout mTopBar;
+//    private final ImageView mEditButton;
+//    private final ImageView mSelectAllButton;
+//    private final ImageView mDeselectAllButton;
+//    private final ImageView mDeleteSelectionButton;
+//    private final LinearLayout mEditTopBar;
+//    private final LinearLayout mTopBar;
     private SelectableAdapter<RecyclerView.ViewHolder> mAdapter;
-    private final DeleteListener mDeleteListener;
+//    private final DeleteListener mDeleteListener;
     private final Context mContext;
     private int mDialogDeleteMessageResourceId;
 
     public SelectableHelper(View view, DeleteListener listener) {
         mContext = view.getContext();
-        mDeleteListener = listener;
-
-        mEditTopBar = view.findViewById(R.id.edit_list);
-        mTopBar = view.findViewById(R.id.top_bar);
-
-        ImageView cancelButton = view.findViewById(R.id.cancel);
-        cancelButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        quitEditionMode();
-                    }
-                });
-
-        mEditButton = view.findViewById(R.id.edit);
-        mEditButton.setEnabled(false);
-
-        mEditButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mAdapter.getItemCount() > 0) {
-                            enterEditionMode();
-                            mTopBar.setVisibility(View.GONE);
-                            mEditTopBar.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-        mSelectAllButton = view.findViewById(R.id.select_all);
-        mSelectAllButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAdapter.selectAll();
-                    }
-                });
-
-        mDeselectAllButton = view.findViewById(R.id.deselect_all);
-        mDeselectAllButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAdapter.deselectAll();
-                    }
-                });
-
-        mDeleteSelectionButton = view.findViewById(R.id.delete);
-        mDeleteSelectionButton.setEnabled(false);
-
-        mDeleteSelectionButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final Dialog dialog =
-                                LinphoneUtils.getDialog(
-                                        mContext,
-                                        mContext.getString(mDialogDeleteMessageResourceId));
-                        Button delete = dialog.findViewById(R.id.dialog_delete_button);
-                        Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
-
-                        delete.setOnClickListener(
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        mDeleteListener.onDeleteSelection(getSelectedObjects());
-                                        mEditButton.setEnabled(mAdapter.getItemCount() != 0);
-                                        dialog.dismiss();
-                                        quitEditionMode();
-                                    }
-                                });
-
-                        cancel.setOnClickListener(
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        dialog.dismiss();
-                                        quitEditionMode();
-                                    }
-                                });
-                        dialog.show();
-                    }
-                });
-
-        mDialogDeleteMessageResourceId = R.string.delete_text;
+//        mDeleteListener = listener;
+//
+//        mEditTopBar = view.findViewById(R.id.edit_list);
+//        mTopBar = view.findViewById(R.id.top_bar);
+//
+//        ImageView cancelButton = view.findViewById(R.id.cancel);
+//        cancelButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        quitEditionMode();
+//                    }
+//                });
+//
+//        mEditButton = view.findViewById(R.id.edit);
+//        mEditButton.setEnabled(false);
+//
+//        mEditButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (mAdapter.getItemCount() > 0) {
+//                            enterEditionMode();
+//                            mTopBar.setVisibility(View.GONE);
+//                            mEditTopBar.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                });
+//
+//        mSelectAllButton = view.findViewById(R.id.select_all);
+//        mSelectAllButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mAdapter.selectAll();
+//                    }
+//                });
+//
+//        mDeselectAllButton = view.findViewById(R.id.deselect_all);
+//        mDeselectAllButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mAdapter.deselectAll();
+//                    }
+//                });
+//
+//        mDeleteSelectionButton = view.findViewById(R.id.delete);
+//        mDeleteSelectionButton.setEnabled(false);
+//
+//        mDeleteSelectionButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        final Dialog dialog =
+//                                LinphoneUtils.getDialog(
+//                                        mContext,
+//                                        mContext.getString(mDialogDeleteMessageResourceId));
+//                        Button delete = dialog.findViewById(R.id.dialog_delete_button);
+//                        Button cancel = dialog.findViewById(R.id.dialog_cancel_button);
+//
+//                        delete.setOnClickListener(
+//                                new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//                                        mDeleteListener.onDeleteSelection(getSelectedObjects());
+//                                        mEditButton.setEnabled(mAdapter.getItemCount() != 0);
+//                                        dialog.dismiss();
+//                                        quitEditionMode();
+//                                    }
+//                                });
+//
+//                        cancel.setOnClickListener(
+//                                new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//                                        dialog.dismiss();
+//                                        quitEditionMode();
+//                                    }
+//                                });
+//                        dialog.show();
+//                    }
+//                });
+//
+//        mDialogDeleteMessageResourceId = R.string.delete_text;
     }
 
     public void setDialogMessage(int id) {
@@ -142,42 +142,42 @@ public class SelectableHelper {
     }
 
     public void setAdapter(SelectableAdapter adapter) {
-        mAdapter = adapter;
-        mEditButton.setEnabled(mAdapter.getItemCount() != 0);
+//        mAdapter = adapter;
+//        mEditButton.setEnabled(mAdapter.getItemCount() != 0);
     }
 
     public void updateSelectionButtons(boolean isSelectionEmpty, boolean isSelectionFull) {
-        if (isSelectionEmpty) {
-            mDeleteSelectionButton.setEnabled(false);
-        } else {
-            mDeleteSelectionButton.setEnabled(true);
-        }
-
-        if (isSelectionFull) {
-            mSelectAllButton.setVisibility(View.GONE);
-            mDeselectAllButton.setVisibility(View.VISIBLE);
-        } else {
-            mSelectAllButton.setVisibility(View.VISIBLE);
-            mDeselectAllButton.setVisibility(View.GONE);
-        }
+//        if (isSelectionEmpty) {
+//            mDeleteSelectionButton.setEnabled(false);
+//        } else {
+//            mDeleteSelectionButton.setEnabled(true);
+//        }
+//
+//        if (isSelectionFull) {
+//            mSelectAllButton.setVisibility(View.GONE);
+//            mDeselectAllButton.setVisibility(View.VISIBLE);
+//        } else {
+//            mSelectAllButton.setVisibility(View.VISIBLE);
+//            mDeselectAllButton.setVisibility(View.GONE);
+//        }
     }
 
     private void quitEditionMode() {
-        mAdapter.enableEdition(false);
-        mTopBar.setVisibility(View.VISIBLE);
-        mEditTopBar.setVisibility(View.GONE);
-        mDeleteSelectionButton.setEnabled(false);
-        mSelectAllButton.setVisibility(View.GONE);
-        mDeselectAllButton.setVisibility(View.VISIBLE);
+//        mAdapter.enableEdition(false);
+//        mTopBar.setVisibility(View.VISIBLE);
+//        mEditTopBar.setVisibility(View.GONE);
+//        mDeleteSelectionButton.setEnabled(false);
+//        mSelectAllButton.setVisibility(View.GONE);
+//        mDeselectAllButton.setVisibility(View.VISIBLE);
     }
 
     public void enterEditionMode() {
-        mAdapter.enableEdition(true);
-        mTopBar.setVisibility(View.GONE);
-        mEditTopBar.setVisibility(View.VISIBLE);
-        mDeleteSelectionButton.setEnabled(false);
-        mSelectAllButton.setVisibility(View.VISIBLE);
-        mDeselectAllButton.setVisibility(View.GONE);
+//        mAdapter.enableEdition(true);
+//        mTopBar.setVisibility(View.GONE);
+//        mEditTopBar.setVisibility(View.VISIBLE);
+//        mDeleteSelectionButton.setEnabled(false);
+//        mSelectAllButton.setVisibility(View.VISIBLE);
+//        mDeselectAllButton.setVisibility(View.GONE);
     }
 
     private Object[] getSelectedObjects() {
@@ -191,7 +191,7 @@ public class SelectableHelper {
     }
 
     public void setEditButtonVisibility(boolean visible) {
-        mEditButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+//        mEditButton.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public interface DeleteListener {

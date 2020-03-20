@@ -29,19 +29,19 @@ import vn.propzy.biphone.R;
 
 
 public class ContactSelectView extends View {
-    private final TextView mContactName;
-    private final ImageView mDeleteContact;
+//    private final TextView mContactName;
+//    private final ImageView mDeleteContact;
 
     public ContactSelectView(Context context) {
         super(context);
 
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View view = inflater.inflate(R.layout.contact_selected, null);
-
-        mContactName = view.findViewById(R.id.sipUri);
-        mDeleteContact = view.findViewById(R.id.contactChatDelete);
+//        LayoutInflater inflater =
+//                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//        View view = inflater.inflate(R.layout.contact_selected, null);
+//
+//        mContactName = view.findViewById(R.id.sipUri);
+//        mDeleteContact = view.findViewById(R.id.contactChatDelete);
     }
 
 //    public void setContactName(ContactAddress ca) {
@@ -56,6 +56,6 @@ public class ContactSelectView extends View {
 //    }
 
     public void setListener(OnClickListener listener) {
-        mDeleteContact.setOnClickListener(listener);
+//        mDeleteContact.setOnClickListener(listener);
     }
 }

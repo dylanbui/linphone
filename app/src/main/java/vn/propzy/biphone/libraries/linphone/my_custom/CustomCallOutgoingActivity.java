@@ -102,6 +102,7 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
                                         Toast.LENGTH_SHORT)
                                         .show();
                             } else if (message != null) {
+                                Log.e("TAG", "Unknown error - " + message);
                                 Toast.makeText(
                                         CustomCallOutgoingActivity.this,
                                         getString(R.string.error_unknown) + " - " + message,
@@ -148,33 +149,33 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
     @Override
     protected void onResume() {
         super.onResume();
-//        Core core = LinphoneManager.getCore();
-//        if (core != null) {
-//            core.addListener(mListener);
-//        }
-//
-//        mCall = null;
-//
-//        // Only one call ringing at a time is allowed
-//        if (LinphoneManager.getCore() != null) {
-//            for (Call call : LinphoneManager.getCore().getCalls()) {
-//                State cstate = call.getState();
-//                if (State.OutgoingInit == cstate
-//                        || State.OutgoingProgress == cstate
-//                        || State.OutgoingRinging == cstate
-//                        || State.OutgoingEarlyMedia == cstate) {
-//                    mCall = call;
-//                    break;
-//                }
-//            }
-//        }
-//        if (mCall == null) {
-//            Log.e("[Call Outgoing Activity] Couldn't find outgoing call");
-//            finish();
-//            return;
-//        }
-//
-//        setCurrentCallContactInformation();
+        Core core = LinphoneManager.getCore();
+        if (core != null) {
+            core.addListener(mListener);
+        }
+
+        mCall = null;
+
+        // Only one call ringing at a time is allowed
+        if (LinphoneManager.getCore() != null) {
+            for (Call call : LinphoneManager.getCore().getCalls()) {
+                State cstate = call.getState();
+                if (State.OutgoingInit == cstate
+                        || State.OutgoingProgress == cstate
+                        || State.OutgoingRinging == cstate
+                        || State.OutgoingEarlyMedia == cstate) {
+                    mCall = call;
+                    break;
+                }
+            }
+        }
+        if (mCall == null) {
+            Log.e("[Call Outgoing Activity] Couldn't find outgoing call");
+            finish();
+            return;
+        }
+
+        setCurrentCallContactInformation();
 
         // END ---
 //        Address address = mCall.getRemoteAddress();
