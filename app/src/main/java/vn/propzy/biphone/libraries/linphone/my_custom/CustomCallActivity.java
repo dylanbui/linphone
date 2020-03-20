@@ -29,6 +29,8 @@ import vn.propzy.biphone.R;
 import vn.propzy.biphone.libraries.linphone.LinphoneContext;
 import vn.propzy.biphone.libraries.linphone.LinphoneManager;
 
+// KHong su dung, thay the bang CustomCallOutgoingActivity
+
 public class CustomCallActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mCallTitle, mName, mNumber;

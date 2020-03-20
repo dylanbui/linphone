@@ -69,7 +69,7 @@
         </activity>
 
         <activity android:name=".VoipMainActivity"></activity>
-        <activity android:name=".libraries.linphone.my_custom.CustomCallActivity"></activity>
+        <activity android:name=".libraries.linphone.my_custom.CustomCallOutgoingActivity"></activity>
         <activity android:name=".libraries.linphone.my_custom.CustomCallIncomingActivity"></activity>
 
         <!-- Services -->

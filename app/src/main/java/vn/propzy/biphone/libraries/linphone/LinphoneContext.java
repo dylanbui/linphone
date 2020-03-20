@@ -43,6 +43,7 @@ import vn.propzy.biphone.libraries.linphone.compatibility.Compatibility;
 import vn.propzy.biphone.libraries.linphone.my_custom.ContactsManager;
 import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallActivity;
 import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallIncomingActivity;
+import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallOutgoingActivity;
 import vn.propzy.biphone.libraries.linphone.notifications.NotificationsManager;
 import vn.propzy.biphone.libraries.linphone.service.LinphoneService;
 import vn.propzy.biphone.libraries.linphone.settings.LinphonePreferences;
@@ -337,7 +338,8 @@ public class LinphoneContext {
 //    }
 
     private void onCallStarted() {
-        Intent intent = new Intent(mContext, CustomCallActivity.class);
+        // Intent intent = new Intent(mContext, CustomCallActivity.class);
+        Intent intent = new Intent(mContext, CustomCallOutgoingActivity.class);
         // This flag is required to start an Activity from a Service context
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);

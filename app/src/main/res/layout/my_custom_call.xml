@@ -35,7 +35,6 @@
         android:id="@+id/contactDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/menu"
         android:layout_below="@id/top_bar"
         android:paddingTop="10dp">
 

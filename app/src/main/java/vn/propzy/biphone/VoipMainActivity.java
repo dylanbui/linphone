@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import vn.propzy.biphone.libraries.linphone.LinphoneManager;
 import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallActivity;
 import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallIncomingActivity;
+import vn.propzy.biphone.libraries.linphone.my_custom.CustomCallOutgoingActivity;
 import vn.propzy.biphone.libraries.linphone.my_custom.SimpleLinphone;
 
 
@@ -76,7 +77,7 @@ public class VoipMainActivity extends AppCompatActivity {
 
         Button btnShowOutcoming = findViewById(R.id.btnShowOutcoming);
         btnShowOutcoming.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CustomCallActivity.class);
+            Intent intent = new Intent(this, CustomCallOutgoingActivity.class);
             startActivity(intent);
         });
 
