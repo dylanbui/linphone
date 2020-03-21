@@ -43,7 +43,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:paddingTop="5dp" />
 
-        <vn.propzy.biphone.libraries.linphone.views.MarqueeTextView
+        <vn.propzy.sipphone.libraries.linphone.views.MarqueeTextView
             android:id="@+id/tvContactNumber"
             style="@style/sip_uri_font"
             android:layout_width="wrap_content"
