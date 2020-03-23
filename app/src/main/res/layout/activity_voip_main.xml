@@ -35,8 +35,15 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/call_button"
-            android:text="Call"
+            android:id="@+id/btnCallSip"
+            android:text="Call SIP"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnCallPhoneNumber"
+            android:text="Call 0988818597"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

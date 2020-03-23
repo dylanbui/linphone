@@ -2,6 +2,7 @@ package vn.propzy.sipphone.libraries.linphone.my_custom;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.bumptech.glide.Glide;
 
 import org.linphone.core.Call;
 import org.linphone.core.Call.State;
@@ -82,6 +85,7 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
                                         .show();
                             } else if (call.getErrorInfo().getReason() == Reason.NotFound) {
                                 Toast.makeText(
+                                        // User not found
                                         CustomCallOutgoingActivity.this,
                                         getString(R.string.error_user_not_found),
                                         Toast.LENGTH_SHORT)
@@ -269,18 +273,25 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
 
         LinphoneContact contact =
                 ContactsManager.getInstance().findContactFromAddress(mCall.getRemoteAddress());
+
         if (contact != null) {
 //            ContactAvatar.displayAvatar(contact, mContactAvatar, true);
-            mNumber.setText(contact.getVoipId().toString());
+            // mNumber.setText(contact.getVoipId().toString());
+
+            Uri photo = contact.getPhotoUri();
+            if (photo != null) {
+                Log.e("photo.toString() : " + photo.toString());
+                Glide.with(this).load(photo.toString()).into(mPicture);
+            }
+
             mName.setText(contact.getFullName());
         } else {
 //            String displayName = LinphoneUtils.getAddressDisplayName(mCall.getRemoteAddress());
 //            ContactAvatar.displayAvatar(displayName, mContactAvatar, true);
-            mNumber.setText("So dien thoai KH");
-            mName.setText("Ten KH");
+//            mNumber.setText("So dien thoai KH");
+            mName.setText("Unknown");
         }
     }
-
 
 
     // Khong su dung check permission

@@ -1,6 +1,7 @@
 package vn.propzy.sipphone.libraries.linphone.my_custom;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.linphone.core.Address;
 import org.linphone.core.Friend;
@@ -16,7 +17,7 @@ import vn.propzy.sipphone.libraries.linphone.LinphoneContext;
 
 public class ContactsManager implements FriendListListener, LinphoneContext.CoreStartedListener {
 
-    private List<LinphoneContact> mContacts, mSipContacts;
+    private List<LinphoneContact> mSipContacts;
     // private final ArrayList<ContactsUpdatedListener> mContactsUpdatedListeners;
     private MagicSearch mMagicSearch;
     private boolean mContactsFetchedOnce = false;
@@ -32,7 +33,7 @@ public class ContactsManager implements FriendListListener, LinphoneContext.Core
 //        super(new Handler(Looper.getMainLooper()));
 //        mContext = context;
 //        mContactsUpdatedListeners = new ArrayList<>();
-        mContacts = new ArrayList<>();
+//        mContacts = new ArrayList<>();
         mSipContacts = new ArrayList<>();
 //
 //        if (LinphoneManager.getCore() != null) {
@@ -92,8 +93,10 @@ public class ContactsManager implements FriendListListener, LinphoneContext.Core
 
         String[] arr = address.asStringUriOnly().split("@");
 
+        // Format : "sip:0987654321"
         for (LinphoneContact contact : mSipContacts) {
-            if (contact.getVoipId() == Integer.getInteger(arr[0])) {
+            // Log.e("TAG", contact.getSipFormatAddress());
+            if (contact.getSipFormatAddress().equals(arr[0])) {
                 return contact;
             }
         }

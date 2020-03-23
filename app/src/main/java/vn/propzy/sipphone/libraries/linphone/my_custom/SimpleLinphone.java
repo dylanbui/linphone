@@ -3,10 +3,14 @@ package vn.propzy.sipphone.libraries.linphone.my_custom;
 import org.linphone.core.AVPFMode;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.Address;
+import org.linphone.core.AuthInfo;
+import org.linphone.core.CallParams;
 import org.linphone.core.Core;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
+
+import java.util.List;
 
 import vn.propzy.sipphone.libraries.linphone.LinphoneManager;
 
@@ -16,6 +20,11 @@ public class SimpleLinphone {
     private static final String TAG = "SimpleLinphone";
     private static SimpleLinphone sInstance = null;
     // private Context mContext;
+
+    private ProxyConfig mProxyConfig;
+    private AuthInfo mAuthInfo;
+
+    private LinphoneContact currentCallContact;
 
     public static SimpleLinphone instance() {
         if (sInstance == null) {
@@ -95,21 +104,58 @@ public class SimpleLinphone {
 //        mLinphoneCore.setDefaultProxyConfig(prxCfg);
     }
 
-    public void removeAuthConfig() {
+//    public void removeAuthConfig() {
+//        Core mCore = LinphoneManager.getCore();
+//        if (mCore == null) return;
+//        // Remove old config
+//        mCore.removeProxyConfig(mCore.getDefaultProxyConfig());
+//    }
+
+    public void removeAccount() {
+        mProxyConfig = null;
+        mAuthInfo = null;
         Core mCore = LinphoneManager.getCore();
         if (mCore == null) return;
-        // Remove old config
-        mCore.removeProxyConfig(mCore.getDefaultProxyConfig());
+
+        ProxyConfig mProxyConfig = mCore.getDefaultProxyConfig();
+        mAuthInfo = mProxyConfig.findAuthInfo();
+
+        if (mProxyConfig != null) {
+            mCore.removeProxyConfig(mProxyConfig);
+        }
+        if (mAuthInfo != null) {
+            mCore.removeAuthInfo(mAuthInfo);
+        }
     }
 
     public void startSingleCallingTo(LinphoneContact contact) {
         Core mCore = LinphoneManager.getCore();
         if (mCore == null) return;
-        Address address = mCore.interpretUrl("ten@domain.sip.com");
-        address.setDisplayName("display name");
-//        Address address = mCore.interpretUrl(bean.getUserName() + "@" + bean.getHost());
-//        address.setDisplayName(bean.getDisplayName());
-        LinphoneManager.getCallManager().inviteAddress(address, false);
+
+        Address addressToCall = mCore.interpretUrl(contact.getCallValue());
+        addressToCall.setDisplayName(contact.getFullName());
+
+        CallParams params = mCore.createCallParams(null);
+        params.enableVideo(false);
+
+        if (addressToCall == null) {
+            Log.e("addressToCall == null");
+            return;
+        }
+        mCore.inviteAddressWithParams(addressToCall, params);
+
+
+//        Core mCore = LinphoneManager.getCore();
+//        if (mCore == null) return;
+//
+//        // Save current call
+//        currentCallContact = contact;
+//
+//        Address address = mCore.interpretUrl("ten@domain.sip.com");
+//        address.setDisplayName("display name");
+////        Address address = mCore.interpretUrl(bean.getUserName() + "@" + bean.getHost());
+////        address.setDisplayName(bean.getDisplayName());
+//        LinphoneManager.getCallManager().inviteAddress(address, false);
 
 //        Core mCore = LinphoneService.getCore();
 //        if (mCore == null) return null;
@@ -122,4 +168,10 @@ public class SimpleLinphone {
 //        CallParams params = mCore.createCallParams(null);
 //        return mCore.inviteAddressWithParams(address, params);
     }
+
+    public void setListContact(List<LinphoneContact> contacts) {
+        ContactsManager.getInstance().setListSipContact(contacts);
+    }
+
+
 }

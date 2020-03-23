@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import vn.propzy.sipphone.libraries.linphone.LinphoneManager;
 import vn.propzy.sipphone.libraries.linphone.my_custom.CustomCallIncomingActivity;
 import vn.propzy.sipphone.libraries.linphone.my_custom.CustomCallOutgoingActivity;
+import vn.propzy.sipphone.libraries.linphone.my_custom.LinphoneContact;
 import vn.propzy.sipphone.libraries.linphone.my_custom.SimpleLinphone;
 
 
 public class VoipMainActivity extends AppCompatActivity {
 
-    // private String testPhone = "0988818597";
-    private String testPhone = "826";
+    private String testPhone = "0988818597";
+    //private String testPhone = "826";
 
     private ImageView mLed;
     private CoreListenerStub mCoreListener;
@@ -59,19 +60,31 @@ public class VoipMainActivity extends AppCompatActivity {
 
 
 
-        Button callButton = findViewById(R.id.call_button);
-        callButton.setOnClickListener(v -> {
-            Core core = LinphoneManager.getCore();
-            Address addressToCall = core.interpretUrl(mSipAddressToCall.getText().toString());
-            CallParams params = core.createCallParams(null);
+        Button btnCallSip = findViewById(R.id.btnCallSip);
+        btnCallSip.setOnClickListener(v -> {
+            String value = mSipAddressToCall.getText().toString();
+            int finalValue = Integer.parseInt(value);
+            LinphoneContact contact = new LinphoneContact(finalValue , finalValue, "Tel " + value);
+            SimpleLinphone.instance().startSingleCallingTo(contact);
 
-//            Switch videoEnabled = findViewById(R.id.call_with_video);
-//            params.enableVideo(videoEnabled.isChecked());
-            params.enableVideo(false);
+//            Core core = LinphoneManager.getCore();
+//            Address addressToCall = core.interpretUrl(mSipAddressToCall.getText().toString());
+//            CallParams params = core.createCallParams(null);
+//
+//            //Switch videoEnabled = findViewById(R.id.call_with_video);
+//            // params.enableVideo(videoEnabled.isChecked());
+//            params.enableVideo(false);
+//
+//            if (addressToCall != null) {
+//                core.inviteAddressWithParams(addressToCall, params);
+//            }
+        });
 
-            if (addressToCall != null) {
-                core.inviteAddressWithParams(addressToCall, params);
-            }
+        Button btnCallPhoneNumber = findViewById(R.id.btnCallPhoneNumber);
+        btnCallPhoneNumber.setOnClickListener(v -> {
+            String value = mSipAddressToCall.getText().toString();
+            LinphoneContact contact = new LinphoneContact(123, value, "Tel " + value);
+            SimpleLinphone.instance().startSingleCallingTo(contact);
         });
 
         Button btnShowOutcoming = findViewById(R.id.btnShowOutcoming);
@@ -88,7 +101,7 @@ public class VoipMainActivity extends AppCompatActivity {
 
         // Remove old config
         // LinphoneService.getCore().removeProxyConfig(LinphoneService.getCore().getDefaultProxyConfig());
-        SimpleLinphone.instance().removeAuthConfig();
+        SimpleLinphone.instance().removeAccount(); //removeAuthConfig();
 
         // So 1
 //        String strName = "826";

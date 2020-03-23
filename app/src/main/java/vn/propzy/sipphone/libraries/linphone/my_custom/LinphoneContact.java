@@ -13,10 +13,13 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
     private transient Friend mFriend;
     private String mFullName, mFirstName, mLastName, mOrganization;
     private transient Uri mPhotoUri, mThumbnailUri;
+
     private boolean mHasSipAddress;
     private boolean mIsStarred;
 
     private Integer mUserId, mVoipId;
+    private String mPhoneNumber;
+
 
     public LinphoneContact() {
         super();
@@ -32,6 +35,22 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
         mPhotoUri = null;
         mHasSipAddress = false;
         mIsStarred = false;
+    }
+
+    public LinphoneContact(Integer userId, String phoneNumber, String fullname) {
+        this();
+        mUserId = userId;
+        mPhoneNumber = phoneNumber;
+        mFullName = fullname;
+        mHasSipAddress = false;
+    }
+
+    public LinphoneContact(Integer userId, Integer voipId, String fullname) {
+        this();
+        mUserId = userId;
+        mVoipId = voipId;
+        mFullName = fullname;
+        mHasSipAddress = true;
     }
 
     public LinphoneContact(Integer userId, Integer voipId, String fullname, Uri photoUri) {
@@ -111,16 +130,30 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
         return mVoipId;
     }
 
+    public String getPhoneNumber() {
+        return mPhoneNumber;
+    }
+
+    public String getCallValue() {
+        if (mHasSipAddress) {
+            return mVoipId.toString();
+        }
+        return mPhoneNumber;
+    }
+
+    public String getSipFormatAddress() {
+        if (mHasSipAddress) {
+            return "sip:" + mVoipId.toString();
+        }
+        return "sip:" + mPhoneNumber;
+    }
+
     /*
        Name related
     */
 
     public String getFullName() {
-        return mFullName;
-    }
-
-    public void setFullName(String name) {
-        mFullName = name;
+        return mFullName == null ? "unknown" : mFullName;
     }
 
     public String getFirstName() {
@@ -139,7 +172,7 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
         return mPhotoUri;
     }
 
-    private void setPhotoUri(Uri uri) {
+    public void setPhotoUri(Uri uri) {
         if (uri != null && uri.equals(mPhotoUri)) return;
         mPhotoUri = uri;
     }
@@ -148,7 +181,7 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
         return mThumbnailUri;
     }
 
-    private void setThumbnailUri(Uri uri) {
+    public void setThumbnailUri(Uri uri) {
         if (uri != null && uri.equals(mThumbnailUri)) return;
         mThumbnailUri = uri;
     }
@@ -163,6 +196,10 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
             return mFriend.getPresenceModelForUriOrTel(uri).getContact();
         }
         return null;
+    }
+
+    public boolean hasAddress() {
+        return mHasSipAddress;
     }
 
 }
