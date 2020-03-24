@@ -37,29 +37,23 @@ public class LinphoneContact implements Serializable, Comparable<LinphoneContact
         mIsStarred = false;
     }
 
-    public LinphoneContact(Integer userId, String phoneNumber, String fullname) {
+    public LinphoneContact(Integer userId, String phoneNumber, String fullName, Boolean hasSipAddress) {
         this();
         mUserId = userId;
-        mPhoneNumber = phoneNumber;
-        mFullName = fullname;
-        mHasSipAddress = false;
+        if (hasSipAddress) {
+            mVoipId = Integer.parseInt(phoneNumber);
+        } else {
+            mPhoneNumber = phoneNumber;
+        }
+        mFullName = fullName;
+        mHasSipAddress = hasSipAddress;
     }
 
-    public LinphoneContact(Integer userId, Integer voipId, String fullname) {
+    public LinphoneContact(Integer userId, Integer voipId, String fullName) {
         this();
         mUserId = userId;
         mVoipId = voipId;
-        mFullName = fullname;
-        mHasSipAddress = true;
-    }
-
-    public LinphoneContact(Integer userId, Integer voipId, String fullname, Uri photoUri) {
-        this();
-        mUserId = userId;
-        mVoipId = voipId;
-        mFullName = fullname;
-        mPhotoUri = photoUri;
-        mThumbnailUri = photoUri;
+        mFullName = fullName;
         mHasSipAddress = true;
     }
 

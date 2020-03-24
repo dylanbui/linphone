@@ -59,9 +59,9 @@ public class ContactsManager implements FriendListListener, LinphoneContext.Core
 //        }
     }
 
-    public void setListSipContact(List<LinphoneContact> sipContacts) {
-        mSipContacts = sipContacts;
-    }
+    public void setListSipContacts(List<LinphoneContact> sipContacts) { mSipContacts = sipContacts; }
+
+    public List<LinphoneContact> getListSipContacts() { return mSipContacts; }
 
 //    public void addContactsListener(ContactsUpdatedListener listener) {
 //        mContactsUpdatedListeners.add(listener);

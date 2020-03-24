@@ -348,6 +348,14 @@ public class LinphoneManager implements SensorEventListener {
         return getInstance().mCore;
     }
 
+    public static synchronized void coreEnsureRegistered() {
+        Core core = getCore();
+        if (core != null) {
+            Log.w("[Manager] EnsureRegistered Core");
+            core.ensureRegistered();
+        }
+    }
+
     /* End of static */
 
     public MediaScanner getMediaScanner() {

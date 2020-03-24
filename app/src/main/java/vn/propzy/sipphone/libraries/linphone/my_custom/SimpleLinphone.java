@@ -1,5 +1,7 @@
 package vn.propzy.sipphone.libraries.linphone.my_custom;
 
+import android.net.Uri;
+
 import org.linphone.core.AVPFMode;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.Address;
@@ -118,6 +120,8 @@ public class SimpleLinphone {
         if (mCore == null) return;
 
         ProxyConfig mProxyConfig = mCore.getDefaultProxyConfig();
+        if (mProxyConfig == null) return;
+
         mAuthInfo = mProxyConfig.findAuthInfo();
 
         if (mProxyConfig != null) {
@@ -128,12 +132,18 @@ public class SimpleLinphone {
         }
     }
 
+    public void startSingleCallingTo(String callNumber, String displayName, Boolean isCustomer) {
+        LinphoneContact contact = new LinphoneContact(111 , callNumber, displayName, !isCustomer);
+        startSingleCallingTo(contact);
+    }
+
     public void startSingleCallingTo(LinphoneContact contact) {
         Core mCore = LinphoneManager.getCore();
         if (mCore == null) return;
 
+        // Make call
         Address addressToCall = mCore.interpretUrl(contact.getCallValue());
-        addressToCall.setDisplayName(contact.getFullName());
+        addressToCall.setDisplayName(contact.getFullName()); // Name display in call activity
 
         CallParams params = mCore.createCallParams(null);
         params.enableVideo(false);
@@ -143,7 +153,6 @@ public class SimpleLinphone {
             return;
         }
         mCore.inviteAddressWithParams(addressToCall, params);
-
 
 //        Core mCore = LinphoneManager.getCore();
 //        if (mCore == null) return;
@@ -169,8 +178,8 @@ public class SimpleLinphone {
 //        return mCore.inviteAddressWithParams(address, params);
     }
 
-    public void setListContact(List<LinphoneContact> contacts) {
-        ContactsManager.getInstance().setListSipContact(contacts);
+    public void setListSipContacts(List<LinphoneContact> contacts) {
+        ContactsManager.getInstance().setListSipContacts(contacts);
     }
 
 

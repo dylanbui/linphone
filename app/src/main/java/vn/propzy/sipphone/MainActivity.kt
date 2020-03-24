@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), ServiceWaitThreadListener {
 
         LinphoneManager.getInstance().changeStatusToOnline()
 
-        SimpleLinphone.instance().setListContact(demoContacts())
+        // SimpleLinphone.instance().setListSipContacts(demoContacts())
 
         // Once the service is ready, we can move on in the application
         // We'll forward the intent action, type and extras so it can be handled
@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity(), ServiceWaitThreadListener {
         contact1.photoUri = uri
         val contact2 = LinphoneContact(827, 827, "tel 827")
         contact2.photoUri = uri
-        val contact3 = LinphoneContact(1, "0988818597", "tel Duc Bui")
+        val contact3 = LinphoneContact(1, "0988818597", "tel Duc Bui", false)
         contact3.photoUri = uri
-        val contact4 = LinphoneContact(1, "0855562000", "tel Tin Luong")
+        val contact4 = LinphoneContact(1, "0855562000", "tel Tin Luong", false)
         contact4.photoUri = uri
 
         return arrayListOf(contact1, contact2, contact3, contact4)

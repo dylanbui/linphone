@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 
+import org.linphone.core.Address;
 import org.linphone.core.Call;
 import org.linphone.core.Call.State;
 import org.linphone.core.Core;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import vn.propzy.sipphone.R;
 import vn.propzy.sipphone.libraries.linphone.LinphoneContext;
 import vn.propzy.sipphone.libraries.linphone.LinphoneManager;
+import vn.propzy.sipphone.libraries.linphone.utils.LinphoneUtils;
 
 
 public class CustomCallOutgoingActivity extends AppCompatActivity implements OnClickListener {
@@ -142,9 +144,9 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
     @Override
     protected void onStart() {
         super.onStart();
+        // TODO: Check permission here
         // O day xin them quyen READ_PHONE_STATE
         // Note lai coi co that su can quyen nay khong
-        // checkAndRequestCallPermissions();
     }
 
     @Override
@@ -177,26 +179,6 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
         }
 
         setCurrentCallContactInformation();
-
-        // END ---
-//        Address address = mCall.getRemoteAddress();
-//        LinphoneContact contact = ContactsManager.getInstance().findContactFromAddress(address);
-//        if (contact != null) {
-//            // ContactAvatar.displayAvatar(contact, findViewById(R.id.avatar_layout), true);
-//            mName.setText(contact.getFullName());
-//        } else {
-//            String displayName = LinphoneUtils.getAddressDisplayName(address);
-//            // ContactAvatar.displayAvatar(displayName, findViewById(R.id.avatar_layout), true);
-//            mName.setText(displayName);
-//        }
-//        mNumber.setText(LinphoneUtils.getDisplayableAddress(address));
-
-//        boolean recordAudioPermissionGranted = checkPermission(Manifest.permission.RECORD_AUDIO);
-//        if (!recordAudioPermissionGranted) {
-//            Log.w("[Call Outgoing Activity] RECORD_AUDIO permission denied, muting microphone");
-//            core.enableMic(false);
-//            mMicro.setSelected(true);
-//        }
     }
 
     @Override
@@ -271,97 +253,26 @@ public class CustomCallOutgoingActivity extends AppCompatActivity implements OnC
     private void setCurrentCallContactInformation() {
         if (mCall == null) return;
 
+        Address address = mCall.getRemoteAddress();
         LinphoneContact contact =
-                ContactsManager.getInstance().findContactFromAddress(mCall.getRemoteAddress());
+                ContactsManager.getInstance().findContactFromAddress(address);
 
         if (contact != null) {
-//            ContactAvatar.displayAvatar(contact, mContactAvatar, true);
-            // mNumber.setText(contact.getVoipId().toString());
-
             Uri photo = contact.getPhotoUri();
             if (photo != null) {
-                Log.e("photo.toString() : " + photo.toString());
+                Log.e("photo : " + photo.toString());
                 Glide.with(this).load(photo.toString()).into(mPicture);
             }
-
+//            ContactAvatar.displayAvatar(contact, mContactAvatar, true);
             mName.setText(contact.getFullName());
         } else {
-//            String displayName = LinphoneUtils.getAddressDisplayName(mCall.getRemoteAddress());
+            String displayName = LinphoneUtils.getAddressDisplayName(address);
 //            ContactAvatar.displayAvatar(displayName, mContactAvatar, true);
-//            mNumber.setText("So dien thoai KH");
-            mName.setText("Unknown");
+            mName.setText(displayName);
         }
+        // Display phone number at here
+        // mNumber.setText(LinphoneUtils.getDisplayableAddress(address));
     }
 
-
-    // Khong su dung check permission
-
-    private void checkAndRequestCallPermissions() {
-        ArrayList<String> permissionsList = new ArrayList<>();
-
-        int recordAudio =
-                getPackageManager()
-                        .checkPermission(Manifest.permission.RECORD_AUDIO, getPackageName());
-        Log.i(
-                "[Permission] Record audio permission is "
-                        + (recordAudio == PackageManager.PERMISSION_GRANTED
-                        ? "granted"
-                        : "denied"));
-
-        int readPhoneState =
-                getPackageManager()
-                        .checkPermission(Manifest.permission.READ_PHONE_STATE, getPackageName());
-        Log.i(
-                "[Permission] Read phone state permission is "
-                        + (readPhoneState == PackageManager.PERMISSION_GRANTED ? "granted" : "denied"));
-
-        if (recordAudio != PackageManager.PERMISSION_GRANTED) {
-            Log.i("[Permission] Asking for record audio");
-            permissionsList.add(Manifest.permission.RECORD_AUDIO);
-        }
-        if (readPhoneState != PackageManager.PERMISSION_GRANTED) {
-            Log.i("[Permission] Asking for read phone state");
-            permissionsList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-
-        if (permissionsList.size() > 0) {
-            String[] permissions = new String[permissionsList.size()];
-            permissions = permissionsList.toArray(permissions);
-            ActivityCompat.requestPermissions(this, permissions, 0);
-        }
-    }
-
-    private boolean checkPermission(String permission) {
-        int granted = getPackageManager().checkPermission(permission, getPackageName());
-        Log.i(
-                "[Permission] "
-                        + permission
-                        + " permission is "
-                        + (granted == PackageManager.PERMISSION_GRANTED ? "granted" : "denied"));
-        return granted == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        for (int i = 0; i < permissions.length; i++) {
-            Log.i(
-                    "[Permission] "
-                            + permissions[i]
-                            + " is "
-                            + (grantResults[i] == PackageManager.PERMISSION_GRANTED
-                            ? "granted"
-                            : "denied"));
-
-            if (permissions[i].equals(Manifest.permission.RECORD_AUDIO)
-                    && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                Core core = LinphoneManager.getCore();
-                if (core != null) {
-                    core.enableMic(true);
-                    mMicro.setSelected(!core.micEnabled());
-                }
-            }
-        }
-    }
 }
 

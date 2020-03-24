@@ -69,14 +69,51 @@
         </activity>
 
         <activity android:name="vn.propzy.sipphone.VoipMainActivity"></activity>
-        <activity android:name="vn.propzy.sipphone.libraries.linphone.my_custom.CustomCallOutgoingActivity"></activity>
-        <activity android:name="vn.propzy.sipphone.libraries.linphone.my_custom.CustomCallIncomingActivity"></activity>
+
+
+        <!-- Call activities -->
+
+        <activity
+            android:name=".libraries.linphone.my_custom.CustomCallIncomingActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"/>
+
+        <activity
+            android:name=".libraries.linphone.my_custom.CustomCallOutgoingActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"/>
 
         <!-- Services -->
 
         <service
             android:name="vn.propzy.sipphone.libraries.linphone.service.LinphoneService"
             android:label="@string/service_name" />
+
+
+        <!-- Receivers -->
+
+        <receiver android:name=".libraries.linphone.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".libraries.linphone.notifications.NotificationBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".libraries.linphone.receivers.AccountEnableReceiver">
+            <intent-filter>
+                <action android:name="org.linphone.intent.ACCOUNTACTIVATE" />
+            </intent-filter>
+        </receiver>
+
 
 
 

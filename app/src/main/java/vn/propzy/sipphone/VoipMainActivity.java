@@ -3,6 +3,7 @@ package vn.propzy.sipphone;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,12 +63,15 @@ public class VoipMainActivity extends AppCompatActivity {
 
         Button btnCallSip = findViewById(R.id.btnCallSip);
         btnCallSip.setOnClickListener(v -> {
-            String value = mSipAddressToCall.getText().toString();
-            int finalValue = Integer.parseInt(value);
-            LinphoneContact contact = new LinphoneContact(finalValue , finalValue, "Tel " + value);
-            SimpleLinphone.instance().startSingleCallingTo(contact);
+//            String value = mSipAddressToCall.getText().toString();
+//            int finalValue = Integer.parseInt(value);
+//            LinphoneContact contact = new LinphoneContact(finalValue , finalValue, "Tel call " + value);
+//            contact.setPhotoUri(Uri.parse("https://i.picsum.photos/id/300/300/300.jpg"));
+//            SimpleLinphone.instance().startSingleCallingTo(contact);
 
-//            Core core = LinphoneManager.getCore();
+            SimpleLinphone.instance().startSingleCallingTo("826", "Hien thi 826", false);
+
+
 //            Address addressToCall = core.interpretUrl(mSipAddressToCall.getText().toString());
 //            CallParams params = core.createCallParams(null);
 //
@@ -82,9 +86,12 @@ public class VoipMainActivity extends AppCompatActivity {
 
         Button btnCallPhoneNumber = findViewById(R.id.btnCallPhoneNumber);
         btnCallPhoneNumber.setOnClickListener(v -> {
-            String value = mSipAddressToCall.getText().toString();
-            LinphoneContact contact = new LinphoneContact(123, value, "Tel " + value);
-            SimpleLinphone.instance().startSingleCallingTo(contact);
+//            String value = mSipAddressToCall.getText().toString();
+//            LinphoneContact contact = new LinphoneContact(123, value, "Tel call " + value);
+//            contact.setPhotoUri(Uri.parse("https://i.picsum.photos/id/300/300/300.jpg"));
+//            SimpleLinphone.instance().startSingleCallingTo(contact);
+
+            SimpleLinphone.instance().startSingleCallingTo("0988818597", "Hien Dylan Bui", true);
         });
 
         Button btnShowOutcoming = findViewById(R.id.btnShowOutcoming);

@@ -2,6 +2,7 @@ package vn.propzy.sipphone.libraries.linphone.my_custom;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.KeyEvent;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.bumptech.glide.Glide;
 
 import org.linphone.core.Address;
 import org.linphone.core.Call;
@@ -41,7 +44,7 @@ public class CustomCallIncomingActivity extends AppCompatActivity implements Vie
 
     private Call mCall;
     private CoreListenerStub mListener;
-    private boolean mAlreadyAcceptedOrDeniedCall;
+    private boolean mAlreadyAcceptedOrDeniedCall; // Tranh cho bam nhieu lan
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,8 @@ public class CustomCallIncomingActivity extends AppCompatActivity implements Vie
                     // Cap nhat gia dien goi
                     // Cap nhat, bat dau thoi gian goi
 
+                    mAlreadyAcceptedOrDeniedCall = false;
+
                     mCallTitle.setText("Đang gọi");
 
                     // Hide menu waiting
@@ -115,7 +120,7 @@ public class CustomCallIncomingActivity extends AppCompatActivity implements Vie
     @Override
     protected void onStart() {
         super.onStart();
-        // checkAndRequestCallPermissions();
+        // TODO: Check permission here
     }
 
     @Override
@@ -138,17 +143,7 @@ public class CustomCallIncomingActivity extends AppCompatActivity implements Vie
             return;
         }
 
-        Address address = mCall.getRemoteAddress();
-        LinphoneContact contact = ContactsManager.getInstance().findContactFromAddress(address);
-        if (contact != null) {
-//            ContactAvatar.displayAvatar(contact, findViewById(R.id.avatar_layout), true);
-            mName.setText(contact.getFullName());
-        } else {
-            String displayName = LinphoneUtils.getAddressDisplayName(address);
-//            ContactAvatar.displayAvatar(displayName, findViewById(R.id.avatar_layout), true);
-            mName.setText(displayName);
-        }
-        mNumber.setText(address.asStringUriOnly());
+        setCurrentCallContactInformation();
 
 //        if (LinphonePreferences.instance().acceptIncomingEarlyMedia()) {
 //            if (mCall.getCurrentParams() != null && mCall.getCurrentParams().videoEnabled()) {
@@ -267,40 +262,29 @@ public class CustomCallIncomingActivity extends AppCompatActivity implements Vie
     }
 
 
+    private void setCurrentCallContactInformation() {
 
+        if (mCall == null) return;
 
-    // Khong su dung check permission
+        Address address = mCall.getRemoteAddress();
+        LinphoneContact contact = ContactsManager.getInstance().findContactFromAddress(address);
 
-    private void checkAndRequestCallPermissions() {
-        ArrayList<String> permissionsList = new ArrayList<>();
-
-        int readPhoneState =
-                getPackageManager()
-                        .checkPermission(Manifest.permission.READ_PHONE_STATE, getPackageName());
-
-        if (readPhoneState != PackageManager.PERMISSION_GRANTED) {
-            Log.i("[Permission] Asking for read phone state");
-            permissionsList.add(Manifest.permission.READ_PHONE_STATE);
+        if (contact != null) {
+            Uri photo = contact.getPhotoUri();
+            if (photo != null) {
+                Log.e("photo : " + photo.toString());
+                Glide.with(this).load(photo.toString()).into(mPicture);
+            }
+//            ContactAvatar.displayAvatar(contact, mContactAvatar, true);
+            mName.setText(contact.getFullName());
+        } else {
+            String displayName = LinphoneUtils.getAddressDisplayName(address);
+//            ContactAvatar.displayAvatar(displayName, mContactAvatar, true);
+            mName.setText(displayName);
         }
-
-        if (permissionsList.size() > 0) {
-            String[] permissions = new String[permissionsList.size()];
-            permissions = permissionsList.toArray(permissions);
-            ActivityCompat.requestPermissions(this, permissions, 0);
-        }
+        // Display phone number at here
+        // mNumber.setText(address.asStringUriOnly());
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-        for (int i = 0; i < permissions.length; i++) {
-            Log.i(
-                    "[Permission] "
-                            + permissions[i]
-                            + " is "
-                            + (grantResults[i] == PackageManager.PERMISSION_GRANTED
-                            ? "granted"
-                            : "denied"));
-        }
-    }
+
 }
